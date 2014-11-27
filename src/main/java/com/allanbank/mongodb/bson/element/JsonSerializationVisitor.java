@@ -692,21 +692,16 @@ public class JsonSerializationVisitor implements Visitor {
      *             On a failure writing the String.
      */
     protected void writeQuotedString(final String string) throws IOException {
-        if (string.indexOf('\'') < 0) {
-            mySink.write('\'');
-            mySink.write(string);
-            mySink.write('\'');
-        }
-        else if (string.indexOf('"') < 0) {
+        if (string.indexOf('"') < 0) {
             mySink.write('"');
             mySink.write(string);
             mySink.write('"');
         }
         else {
-            mySink.write('\'');
+            mySink.write('"');
             // Escape any embedded single quotes.
-            mySink.write(string.replaceAll("'", "\\\\'"));
-            mySink.write('\'');
+            mySink.write(string.replaceAll("\"", "\\\\\""));
+            mySink.write('"');
         }
     }
 }
